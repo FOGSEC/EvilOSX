@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Settings -->
+            <div class="card card-body" style="margin-top: 160px;">
+
+                <h1 class="display-5 animated fadeIn">Settings.</h1>
+                <hr class="my-4">
+
+                <form action="/settings" method="post">
+                    <div class="form-group animated">
+                        <label class="col-form-label" for="masterPassword">
+                            Change master password:
+                        </label>
+
+                        <input class="form-control" placeholder="Password" name="master_password" id="masterPassword" type="password">
+                    </div>
+
+                    <div class="form-group animated">
+                        <label class="col-form-label" for="inactiveTime">
+                            Time after which bots are shown as offline (in minutes):
+                        </label>
+
+                        <input class="form-control" placeholder="3" name="inactive_time" id="inactiveTime" type="text">
+                    </div>
+
+                    <p class="lead">
+                        <input class="btn btn-primary" type="submit" value="Apply" role="button">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
