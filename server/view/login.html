@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Setup master password -->
+            <div class="card card-body col-lg-6" style="margin-top: 160px;">
+
+                <h1 class="display-5 animated flash">Authentication required.</h1>
+                <hr class="my-4">
+
+                <form action="/login" method="post">
+                    <div class="form-group animated">
+                        <label class="col-form-label" for="masterPassword">
+                            Enter master password:
+                        </label>
+
+                        {% if invalid_password %}
+                        <input class="form-control is-invalid" placeholder="Password" name="master_password" id="masterPassword" type="password">
+                        <div class="invalid-feedback">Invalid password, try again.</div>
+                        {% else %}
+                        <input class="form-control" placeholder="Password" name="master_password" id="masterPassword" type="password">
+                        {% endif %}
+                    </div>
+
+                    <p class="lead">
+                        <input class="btn btn-primary" type="submit" value="Continue" role="button">
+                    </p>
+                </form>
+            </div>
+
+            <!-- Logo -->
+            <div class="col-lg-3 animated fadeIn delay-1s">
+                <img src="https://i.imgur.com/RVtqC4Q.png" width="250" style="margin-left: 30px;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
