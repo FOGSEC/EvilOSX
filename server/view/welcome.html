@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Setup master password -->
+            <div class="card card-body col-lg-6" style="margin-top: 160px;">
+
+                <div class="row" style="margin-left: 1px;">
+                    <h1 class="display-5 animated fadeIn">Welcome&nbsp;</h1>
+                    <h1 class="display-5 animated fadeIn delay-1s">to&nbsp;</h1>
+                    <h1 class="display-5 animated fadeIn delay-2s"><b>EvilOSX</b>.</h1>
+                </div>
+
+                <hr class="my-4">
+
+                <form action="/welcome" method="post">
+                    <div class="form-group animated">
+                        <label class="col-form-label" for="master_password">
+                            Please specify a master password (to protect page access):
+                        </label>
+
+                        <input class="form-control" placeholder="New password" name="master_password"
+                               id="master_password" type="password">
+                    </div>
+
+                    <p class="lead">
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Logo -->
+            <div class="col-lg-3 animated fadeIn delay-2s">
+                <img src="https://i.imgur.com/RVtqC4Q.png" width="250" style="margin-left: 30px;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
