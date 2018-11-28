@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container" style="margin-top: 10px;">
+    <div class="container-fluid">
+
+        <!-- Status -->
+        <div class="card animated fadeIn">
+            <div class="card-body">
+                <!-- Connected status -->
+                {% if connected_bot %}
+                <h4 class="card-title">Status: <a class="text-success" href="/control">
+                    Connected ({{ connected_bot.username }} @ {{ connected_bot.hostname }})
+                </a></h4>
+                {% else %}
+                <h4 class="card-title">Status: <a class="text-primary">Not connected</a></h4>
+                {% endif %}
+
+                <!-- Bot amount -->
+                {% if bots %}
+                <p class="card-text">
+                    There are currently <b>{{ bots|length }}</b> bots available.<br/>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <br/>
+
+        <!-- Bot table -->
+        <table class="table table-hover animated fadeIn delay-1s" style="table-layout: fixed" id="bot_table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Version</th>
+                <th scope="col">Root</th>
+                <th scope="col">Last seen</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for bot in bots %}
+            <tr>
+                <th scope="row">{{ bot.username }}@{{ bot.hostname }}</th>
+                <td>{{ bot.system_version }}</td>
+                {% if bot.is_root %}
+                <td><i class="fa fa-check fa-2x" aria-hidden="true"></i></td>
+                {% else %}
+                <td><i class="fa fa-times fa-2x" aria-hidden="true"></i></td>
+                {% endif %}
+                <td>{{ bot.last_seen }}</td>
+                <td>
+                    <form action="/control" method="post">
+                        <input type="hidden" name="bot_uid" value="{{ bot.uid }}"/>
+                        <button type="submit" class="btn btn-primary btn-block">Connect</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
