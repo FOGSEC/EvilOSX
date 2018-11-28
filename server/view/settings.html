@@ -6,26 +6,38 @@
         <div class="row">
 
             <!-- Settings -->
-            <div class="card card-body" style="margin-top: 160px;">
+            <div class="card card-body" style="margin-top: 100px;">
 
-                <h1 class="display-5 animated fadeIn">Settings.</h1>
+                <h1 class="display-5 animated fadeIn">Settings</h1>
                 <hr class="my-4">
 
                 <form action="/settings" method="post">
-                    <div class="form-group animated">
+                    <div class="form-group">
+                        <!-- Master password -->
                         <label class="col-form-label" for="masterPassword">
                             Change master password:
                         </label>
 
-                        <input class="form-control" placeholder="Password" name="master_password" id="masterPassword" type="password">
-                    </div>
+                        <input class="form-control" placeholder="Password" name="master_password" id="masterPassword"
+                               type="password">
 
-                    <div class="form-group animated">
+                        <!-- Inactive time -->
                         <label class="col-form-label" for="inactiveTime">
                             Time after which bots are shown as offline (in minutes):
                         </label>
 
                         <input class="form-control" placeholder="3" name="inactive_time" id="inactiveTime" type="text">
+
+                        <!-- Encryption key -->
+                        <label class="col-form-label" for="inputInvalid">
+                            Encryption key (used by communications):
+                        </label>
+                        <input value="{{ encryption_key }}" class="form-control is-invalid"
+                               id="inputInvalid" type="text">
+                        <div class="text-danger">
+                            Used for migrating bots, don't change with this value unless
+                            you know what you're doing.
+                        </div>
                     </div>
 
                     <p class="lead">
