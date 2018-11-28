@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Builder -->
+            <div class="card card-body" style="margin-top: 100px;">
+
+                <h1 class="display-5 animated fadeIn">Builder</h1>
+                <hr class="my-4">
+
+                <form action="/settings" method="post">
+                    <div class="form-group">
+                        <!-- Host -->
+                        <label class="col-form-label" for="serverHost">
+                            Server host (where EvilOSX should connect to):
+                        </label>
+
+                        <input class="form-control" placeholder="127.0.0.1" name="server_host" id="serverHost"
+                               type="text">
+
+                        <!-- Port -->
+                        <label class="col-form-label" for="serverPort">
+                            Server port:
+                        </label>
+
+                        <input class="form-control" placeholder="1337" name="server_port" id="serverPort" type="text">
+
+                        <!-- Program directory -->
+                        <label class="col-form-label" for="programDirectory">
+                            Where should EvilOSX live? (leave empty for ~/Library/Containers/.random):
+                        </label>
+
+                        <input class="form-control" placeholder="~/Library/Containers/.random"
+                               name="program_directory" id="programDirectory" type="text">
+
+                        <!-- Launch agent name -->
+                        <label class="col-form-label" for="launchAgentName">
+                            Launch agent name (leave empty for com.apple.random):
+                        </label>
+
+                        <input class="form-control" placeholder="com.apple.random"
+                               name="launch_agent_name" id="launchAgentName" type="text">
+
+                        <!-- Filename -->
+                        <label class="col-form-label" for="filename">
+                            Filename (leave empty for random):
+                        </label>
+
+                        <input class="form-control" placeholder="random"
+                               name="filename" id="filename" type="text">
+                    </div>
+
+                    <p class="lead">
+                        <input class="btn btn-primary" type="submit" value="Build" role="button">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
